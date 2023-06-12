@@ -1,2 +1,4 @@
 # PrimeFactoringANN
 ANN's are universal function approximators; thus, if there is a function that can prime factorize a large composite number, then the ANN should be able to approximate it. This is an experiment to test the capabilities of an ANN. 
+
+In order to do this, I made each digit of the number into a feature, which allowed me to make a finite amount of classes by having each digit be a class. However, the results of the experiment were underwhelming, as it's predictive power was very low. I will admit that there may have been better ways to approach this problem, but this was more of a proof of concept. 

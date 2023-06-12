@@ -37,7 +37,7 @@ def predictMLPList(xData : np.ndarray, classifierList : List[MLPClassifier]) -> 
     # digitLists = answers.sum(axis = 1)
     return answers # digitLists
 
-def scoreMLPList(xData : np.ndarray, yData : np.ndarray, classifierList : List[MLPClassifier]) -> List[float]:
+def scoreMLPList(yPredict : np.ndarray, yTrue : np.ndarray) -> List[float]:
     """
         Name       | scoreMLPList
         Parameters | xData(np.ndarray)                   : The input data to score
@@ -47,8 +47,8 @@ def scoreMLPList(xData : np.ndarray, yData : np.ndarray, classifierList : List[M
         Purpose    | Get the scores of the digit
         Use        | Uses the .score for each digit
     """
-    size = len(classifierList)
-    scoreList = [classifierList[i].score(xData, yData[:, i]) for i in range(size)]
+    sampleSize, digits = yPredict.shape
+    scoreList = [np.count_nonzero(yPredict[i] == yTrue[i]) / digits for i in range(sampleSize)]
     return scoreList
 
 def trainMLPList(xData : np.ndarray, yData : np.ndarray, layerSizes : Tuple = (100,), activation : str = 'relu', alpha : int = 0.001) -> List[MLPClassifier]:
@@ -100,7 +100,7 @@ def trainMLP(xData : np.ndarray, yData : np.ndarray, layerSizes : Tuple = (100,)
     clf.fit(xData, yData)
     return clf
 
-def makePrimeDataSet(primeList : List[int], numDataPoints : int = 10000, digitCount : int = 20) -> Tuple[np.ndarray, np.ndarray]:
+def makePrimeDataSet(primeList : List[int], numDataPoints : int = 10000, digitCount : int = 12) -> Tuple[np.ndarray, np.ndarray]:
     """
         Name       | makeDataSet
         Parameters | primeList(List[int...]) : The list of prime numbers to choose from and multiply
@@ -117,7 +117,7 @@ def makePrimeDataSet(primeList : List[int], numDataPoints : int = 10000, digitCo
     labelList   = np.array([x[0] for x in dataPoints])
     return featureList, labelList
 
-def choosePrimesIntList(primeList : List[int], digitCount : int = 20) -> Tuple[List[int], List[int]]:
+def choosePrimesIntList(primeList : List[int], digitCount : int = 12) -> Tuple[List[int], List[int]]:
     """
         Name       | choosePrimesIntList
         Parameters | primeList(List[int...]) : The list of prime numbers to choose from and multiply
@@ -132,7 +132,7 @@ def choosePrimesIntList(primeList : List[int], digitCount : int = 20) -> Tuple[L
     cValues = list(map(int, list(c)))
     return abValues, cValues
 
-def choosePrimes(primeList : List[int], digitCount : int = 20) -> Tuple[str, str, str]:
+def choosePrimes(primeList : List[int], digitCount : int = 12) -> Tuple[str, str, str]:
     """
         Name       | choosePrimes
         Parameters | primeList(List[int...]) : The list of prime numbers to choose from and multiply
@@ -157,7 +157,7 @@ def choosePrimes(primeList : List[int], digitCount : int = 20) -> Tuple[str, str
     values = (intToString(a, digitCount), intToString(b, digitCount), intToString(c, digitCount))
     return values
 
-def intToString(value : int, digitCount : int = 20) -> str:
+def intToString(value : int, digitCount : int = 12) -> str:
     """
         Name       | choosePrimes
         Parameters | value(int)      : The value to convert into a string with size digitCount
