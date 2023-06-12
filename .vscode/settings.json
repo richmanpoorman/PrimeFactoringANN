@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "*.embeddedhtml": "html",
+        "vector": "cpp",
+        "string": "cpp",
+        "xstring": "cpp",
+        "iosfwd": "cpp",
+        "ciso646": "cpp"
+    }
+}
